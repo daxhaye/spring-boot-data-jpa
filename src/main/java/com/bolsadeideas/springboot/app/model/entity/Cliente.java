@@ -33,13 +33,13 @@ public class Cliente implements Serializable {
 	private String apellido;
 	
 	@NotEmpty
+	@Email
 	private String email;
 
 	@NotNull
-	@Email
 	@Column(name = "create_at")
 	@Temporal(TemporalType.DATE)
-	@DateTimeFormat(pattern="yyyy-MM-dd")
+	@DateTimeFormat(pattern="yyyy/MM/dd")
 	private Date createAt;
 
 	
