@@ -10,7 +10,7 @@ import java.nio.file.Paths;
 
 @Configuration
 public class MvcConfig implements WebMvcConfigurer{
-
+/*
 	private final Logger log = LoggerFactory.getLogger(getClass());
 
 	@Override
@@ -23,9 +23,6 @@ public class MvcConfig implements WebMvcConfigurer{
 
 		registry.addResourceHandler("/uploads/**")
 		.addResourceLocations(resourcePath);
-	}
-	
-	
-	
+	}*/
 
 }
