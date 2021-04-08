@@ -1,15 +1,12 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head th:fragment="head">
 <meta charset="UTF-8" />
 <title
 	th:text="' Spring Boot: MVC + Thymeleaf + Data JPA - ' + ${titulo}"></title>
-<link
-	rel="stylesheet"
-	th:href="@{/css/bootstrap.min.css}" />
-<link
-	rel="stylesheet"
-	th:href="@{/css/jquery-ui.min.css}" />	
+<link rel="stylesheet" th:href="@{/css/bootstrap.min.css}" />
+<link rel="stylesheet" th:href="@{/css/jquery-ui.min.css}" />
 
 </head>
 <body>
@@ -28,8 +25,26 @@
 					<ul class="navbar-nav me-auto mb-2 mb-lg-0">
 						<li class="nav-item"><a class="nav-link active"
 							aria-current="page" href="#">Home</a></li>
-						<li class="nav-item"><a class="nav-link" th:href="@{/listar}">Clientes</a>
+						<li class="nav-item"><a class="nav-link" th:href="@{/listar}">Cliente</a>
 						</li>
+					</ul>
+					<ul class="navbar-nav navbar-right">
+						<li sec:authorize="!isAuthenticated()"><a th:href="@{/login}"
+							class="btn btn-outline-primary">Sign In</a></li>
+
+						<li sec:authorize="isAuthenticated()" class="dropdown"><a
+							class="btn btn-outline-primary dropdown-toggle" href="#"
+							role="button" id="dropdownMenuLink" data-bs-toggle="dropdown"
+							aria-expanded="false"><span sec:authentication="name"></span></a>
+
+							<div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+								<form id="logoutForm" th:action="@{/logout}" method="post"></form>
+
+								<button class="dropdown-item"
+									onclick="document.getElementById('logoutForm').submit();"
+									type="submit">Sign Out</button>
+							</div></li>
+
 					</ul>
 					<form class="d-flex">
 						<input class="form-control me-2" type="search"
@@ -39,11 +54,15 @@
 				</div>
 			</div>
 		</nav>
-		
-		<div class="alert alert-success" th:if="${success != null}" th:text="${success}"></div>
-		<div class="alert alert-danger" th:if="${error != null}" th:text="${error}"></div>
-		<div class="alert alert-warning" th:if="${warning != null}" th:text="${warning}"></div>
-		<div class="alert alert-info" th:if="${info != null}" th:text="${info}"></div>
+
+		<div class="alert alert-success" th:if="${success != null}"
+			th:text="${success}"></div>
+		<div class="alert alert-danger" th:if="${error != null}"
+			th:text="${error}"></div>
+		<div class="alert alert-warning" th:if="${warning != null}"
+			th:text="${warning}"></div>
+		<div class="alert alert-info" th:if="${info != null}"
+			th:text="${info}"></div>
 	</header>
 
 	<div class="container">
@@ -51,6 +70,10 @@
 			<hr />
 			<img th:src="@{/images/spring.png}" alt="Spring Logo"
 				class="img-fluid" />
+			<p sec:authorize="isAuthenticated()">
+				Usuario Logeado: <span sec:authentication="name"></span> | Roles: <span
+					sec:authentication="principal.authorities"></span>
+			</p>
 			<p>
 				Powered by <a href="https://projects.spring.io/spring-boot/">SpringBoot</a>
 				y <a href="http://www.thymeleaf.org">Thymeleaf</a>.
@@ -61,13 +84,14 @@
 				Spring Tools), profesor Andrés Guzmán.<br /> &copy; Company 2017,
 				Inc. Todos los derechos reservados. Términos de uso y privacidad <br />
 			</p>
-			
+
 			<!-- Optional JavaScrit -->
 			<!-- jQuery first, then Bootstrap JS -->
 			<script th:src="@{/js/jquery-3.6.0.min.js}"></script>
+			<script th:src="@{/js/popper.min.js}"></script>
 			<script th:src="@{/js/bootstrap.min.js}"></script>
 			<script th:src="@{/js/jquery-ui.min.js}"></script>
-			
+
 
 		</footer>
 	</div>
